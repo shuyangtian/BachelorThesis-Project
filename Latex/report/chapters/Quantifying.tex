@@ -1,0 +1,49 @@
+\chapter{Quantifying information loss based on K-nearest neighbor (KNN) classification algorithm}
+
+
+\section{K-nearest neighbor (KNN) algorithm}
+K-Nearest Neighbor (KNN)\cite{peterson2009k} is a commonly used supervised learning method that works by a straightforward classification mechanism by measuring the distance between different feature values. \cite{altman1992introduction} KNN is based on the idea that if the majority of the k most similar (i.e., most adjacent) samples in a sample's feature space belong to a particular class, then that sample also belongs to that class. From the Y we defined in the previous section, we can classify each of the 0-4 symptoms of Parkinson's disease into five different categories. Thus, when we use KNN classification, the data from IMU are classified into different categories.\\
+Here is a brief description of the KNN algorithm:   \cite{guo2003knn,zhang2017learning}
+
+\begin{itemize}
+    \item [(1)]
+    Obtain the distance between the computed and training data. We use the Minkowski distance, which extends the Euclidean distance.The Minkowski distance \cite{singh2013k} is defined as:
+    \begin{equation}\nonumber
+    \begin{aligned}
+    D(X,Y) = (\sum_{i=1}^{n}\left | x_{i} - y_{i}   \right |^{p})^{\frac{1}{p} } \\
+    \end{aligned}
+    \end{equation}
+    between two points $ X = (x_{1},x_{2},\dots ,x_{n} )$ and $ Y = (y_{1},y_{2},\dots ,y_{n})$ 
+    \item [(2)] Sorting by distance.
+    \item [(3)] Select the K points with the smallest distance.
+    \item [(4)] The categories to which the K points belong are compared, and the test sample points are assigned to the category with the highest percentage of the K points according to the principle of minority rule.
+    \end{itemize}  
+    \section{The choice of k}
+    When classifying the problem point, the k in kNN is the nearest neighbors we select. The choice of k-value is critical because: the larger the k-value, the simpler the model, the larger the bias and the smaller the variance (significant training error, small test error), and the easier the underfitting. If K is equal to N, then it takes all the instances, i.e., it takes the most points under a specific classification in the instances, which has no practical significance for prediction. However, the larger the value of k, the simpler the model, the larger the bias and the smaller the variance (more significant the training error and smaller the testing error), and the easier the underfitting. \cite{kozma2008k,steinbach2009knn,landau2011cluster,hall2008choice}
+    \\ \hspace*{\fill} \\
+    We start with k=1 and use the test to estimate the error rate of the classifier, repeat the process, increasing k by one each time, i.e., adding the nearest neighbor, and then select the k with the minimum error rate. It is also worth noting that the value of k is taken as odd as possible to ensure that a more significant number of categories are generated after calculating the results. A similar situation may arise if an even number is taken, which is not conducive to prediction. \cite{deng2016efficient, steinbach2009knn}
+    
+    
+    \section{Summary on knn algorithm}
+  The KNN algorithm is a simple and effective classification algorithm and is very easy to implement. However, for an extensive training data set, it is very time-consuming as it needs to calculate the sample distances with test samples and training data set. However, when the data is large, we can present the data in trees, such as kd-tree and ball-tree, and the ball-tree works better for multiple classifications.\cite{10.1145/361002.361007,Omohundro89fiveballtree} The KNN classification also has drawbacks, with low prediction accuracy for rare categories when the sample is unbalanced. In the case of sample imbalance, we get significant errors when quantifying information loss. Also, using KD trees, a large amount of memory needs to be built up when using the ball count model. So as the sample data increases, the KNN algorithm requires more time and memory.
+    
+    \\ \hspace*{\fill} \\
+   
+    \section{Quantifying information loss after classification based on knn}
+    We recall the formula for information loss (2.9) and the formula for conditional probability (2.7), we can extend the conditional probability, and we obtain:
+    \begin{equation}\nonumber
+    \begin{aligned}
+    &Loss =H(Y|X') - H(Y|X) \\
+    &H(Y|X) = -\sum_{x\in \mathcal{X},y\in \mathcal{Y}}p(x,y)\log_{}{p(y|x)} = E_{p(x,y)}\left [ -\log_{2}{p(y|x)}  \right ]   \\
+    
+    \end{aligned}
+    \end{equation}
+    
+Where $p(y|x)$ can be given to us by the predicted probability after KNN classification, we can find $p(y_{i} |x_{i}) $. Nevertheless, we need to note that we should use the test set of X and Y here to ensure the model's accuracy. After obtaining the probabilities $p(y_{i} |x_{i}) $, we will estimate the conditional entropy using the Monte Carlo method.Specifically about the calculation of information loss, as described below: \cite{luengo2020survey}
+\begin{equation}
+\begin{aligned}
+\hat{H} (Y|X) &= E_{p(x,y)}\left [ -\log_{x}{p(y|x)}  \right ]  \\
+& = - \iint p(x,y)log(y|x)dxdy \\
+& \approx \frac{1}{N} \sum_{i=1}^{N}  (-\log_{2}{p(y_{i}|x_{i} )} )
+\end{aligned}
+\end{equation}

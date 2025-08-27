@@ -1,0 +1,47 @@
+\chapter{Discussion}
+Our aim in these works is to quantify the information loss due to the reduced resolution of IMU sensors in PD symptom classification. As mentioned previously, high-precision sensors tend to be expensive. Therefore, we can consider using lower accuracy sensors, i.e., low-cost sensors in daily life if the information loss is slight due to the decreasing resolution of IMU sensors. Parkinson's patients can use low-cost sensors to monitor activities in daily life without using high-precision medical IMU sensors.
+The previous section quantified the information loss when the sampling frequency decreases and derived thresholds for sampling rates from 25 Hz to 50 Hz. Based on KNN classification, we obtained the classification probability, i.e., $p(y_{i} | x_{i})$. We estimated the joint entropy of the IMU dataset and Parkinson's disease by Monte Carlo estimation. We derived the information loss by calculating the difference between the joint entropy. KNN classification, however, has some advantages and disadvantages. \\
+
+\textbf{Advantages of KNN}
+\begin{enumerate}
+    \item The KNN algorithms are theoretically mature and relatively simple.
+    \item Compared with the simple Bayesian algorithm, there are no assumptions on the data, high accuracy, and insensitivity to outliers. \cite{8079967}
+    \item  Since the KNN method relies mainly on the limited number of neighboring samples around, rather than on the discriminative class domain approach to determine the class to which they belong. It is more suitable than other methods for classified sample sets with a large number of classes that cross or overlap.
+    \item The KNN algorithm is more suitable for automatically classifying class domains with large sample sizes. In contrast, those with small sample sizes are more prone to misclassification using this algorithm.
+\end{enumerate}
+
+
+\textbf{Disadvantages of KNN}
+\begin{enumerate}
+    \item  Computationally intensive, especially when the number of features is vast.
+  \item  When the samples are unbalanced, KNN classification has low prediction accuracy for rare categories.
+    \item  KD tree, ball tree, and other models need much memory to build.
+\end{enumerate}
+Combining the advantages and disadvantages of the KNN algorithm, we should first avoid the situation of data sample imbalance in our quantification process. As shown in the above section, when the data sample is imbalanced, the information loss of quantification is challenging to obtain. However, combined with the actual situation, the initial condition of Parkinson's disease patients, often in terms of severity, is not large, so the imbalance of data samples is difficult to avoid in the classification process. On the other hand, the KNN algorithm is very time-consuming in the case of large amounts of data. Our test dataset was calculated only part of the time for patients with Parkinson's disease. If information loss needs to be computed less time, the KNN algorithm requires more extended time and storage space. So when scaling to large amounts of data, we have to consider the time and storage space issues.
+\\ \hspace*{\fill} \\
+
+In addition to this, we need to consider the advantages and disadvantages of the Monte Carlo Method. \cite{earl2008monte,raychaudhuri2008introduction}\\
+\textbf{Advantages of the Monte Carlo method}
+\begin{enumerate}
+    \item  The error of the method is independent of the dimensionality of the problem.
+    \item  No discretization is necessary for persistent problems.
+    
+\end{enumerate}
+
+\textbf{Disadvantages of the Monte Carlo method}
+\begin{enumerate}
+    \item The errors are probability errors.
+    \item usually requires more computational steps N.
+\end{enumerate}
+Combining the advantages and disadvantages of the Monte Carlo method, we recall that the shapes of our X and Y are (N; 250, 125, 50, 25) and (N, 1). First of all, our data are high-dimensional, and when using Monte Carlo methods, we can avoid the computational difficulties associated with high-dimensional data. Also, our N-data points are significant in number so that the error can be reduced when using Monte Carlo simulations.\\
+\\ \hspace*{\fill} \\
+We combine the benefits of KNN's multi-classification and applicability to large samples with Monte Carlo methods, which are not limited to high-dimensional data and do not require discretization of continuous variables. The thresholds derived from our quantification of information loss need to ensure many data points and balance the sample data. For the Parkinson's disease score dataset, if there are categories other than '0-4', the information loss we de-quantified is not applicable. So we need to preprocess the data and clean up the data points if other categories appear in the rating dataset. Alternatively, if fewer categorical categories appear, such as '0' or '1', we can consider using other categorization methods to quantify the information.
+
+
+
+
+
+
+
+
+%_______________________________________________

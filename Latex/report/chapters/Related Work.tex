@@ -1,0 +1,85 @@
+\chapter{Related Work}
+
+\section{Quantifying information loss}
+
+From Eric Clarkson's \emph{Quantifying the Loss of Information from Binning List-Mode Data} \cite{2020} \\
+This paper proposes quantifying the information loss when list pattern data are effectively binned due to analysis operations. In this paper, the authors show that Fisher information loss is actual and use the Fisher information matrix (FIM) to quantify the loss due to binning. Factors affecting information loss are also derived. The list-based model imaging system applies Poisson statistics. It gives the list's conditional distribution probability (PDF) at a fixed exposure time, i.e., $pr(A|\theta)$, where $\theta$ is a p-dimensional parameter vector describing the imaged object. In addition, the authors define the FIM of the list pattern data about $theta$ and the binning FIM. The authors discuss the relationship between the two FIMs by replacing the parameter $\theta$ with the spatial coordinate function $f(r)$, and finally by weighting the Hilbertspacenorm, after which the difference between the two FIMs is the information loss quantified in the article. The paper demonstrates a loss of Fisher information in any estimation task when the data in list mode is binned. The method is also applicable when the estimation problem is an object reconstruction problem, where a finite-dimensional parameter vector is replaced by a function in an infinite Hilbert space. This method gives us the proposal to calculate the loss by computing the Fisher information matrix. However, replacing the parameters as a function in Hilbert space is not easy. Moreover, the method is proposed under Poisson distribution. However, for our IMU data and Parkinson's disease score data, we do not know which distribution probability the data belongs to, so if we use this method, we need to discuss the distribution of our data first.
+
+\\ \hspace*{\fill} \\
+From Harikrishnan, K.P. and Misra, R. and Ambika, G's \emph{Quantifying information loss on chaotic attractors through recurrence networks} \cite{2019} \\
+This literature presents a measure of entropy and demonstrates its effectiveness in quantifying the loss of structural information of chaotic attractors using measures of recursive networks. This author proposes a new entropy suitable for analyzing recurrent networks by modifying the fundamental equations of network entropy and calculating the information loss. First understood in terms of information content, the authors determine that entropy can be considered a measure of uncertainty about the information content associated with the network. Information loss is most significant when the network describing a system or process becomes completely homogeneous and vice versa. After defining the probability of information transfer at each node of the network, the authors derive an expression for the information entropy. The method shows that the entropy represents the amount of information required for diffusion on the network and extracts the optimal process by maximizing the entropy. The method discusses the premise that discrete random variables and the probability of each variable are pretty easy to compute. For our IMU data, which are continuous random variables, and Parkinson's ratings, which are discrete random variables, this method requires a step to investigate the relationship between the two random variables.
+
+
+
+\section{Quantifying mutual information and conditional entropy}
+This work investigates the loss of information between IMU data and Parkinson's disease scores as the sampling frequency decreases. We want to infer the specific information loss by calculating the mutual information or conditional entropy between IMU data and Parkinson's disease scores. The following paper describes the method to calculate the mutual information and conditional entropy. As mentioned in the previous section, the mutual information can be expressed in entropy, so measuring information loss can also be calculated by simplifying the mutual information, as in Equation (3.10).
+\\ \hspace*{\fill} \\
+From Eric Charles Y. Zheng and Yuval Benjamini's \emph{Estimating Mutual Information from Average Classification Error} \cite{zheng2016estimating}\\
+Multivariate pattern analysis approaches in neuroimaging are fundamentally concerned with investigating the quantity and type of information processed by various regions of the human brain; typically, estimates of classification accuracy are used to quantify information. \\
+This work combines the features of mutual information $I(X; Y)$, which becomes an excellent method to quantify the information between the random variable X of the neural stimulus and the neuronal signal. Based on supervised learning, a classification up has been established to classify stimulus classes from specific regions of brain activation. However, the accuracy and difficulty of the classification depending on the specific selection of the sample and the number of categories.
+A popular approach that combines the strengths of the machine learning approach and the advantages of the information-theoretic approach is to obtain a lower bound on the mutual information by using the confusion matrix. The authors propose a new link classification performance to imply mutual information and build the link in this paper. The authors define a concept of k-class average Bayesian error. \\
+Specifically, the authors establish a relationship between the mutual information $I (X; Y)$ and the average k-level Bayesian error $e_{\mathrm {ABE,k} }$. Briefly, the authors determine a had function $\pi _{k} $ (which depends on k):
+\begin{equation}
+    e_{\mathrm {ABE,k} } \approx  \pi _{k}\left ( \sqrt{2I(X;Y)} \right ) 
+\end{equation}
+The estimator proposed by the authors is:
+\begin{equation}
+    \hat{I} _{HD} = \frac{1}{2}(\pi _{k}^{-1}(\hat{e}_{gen,\alpha })^{2}  )  ,
+\end{equation}
+the estimate of the generalization error $\hat{e}_{gen,\alpha }$ is then used to replace $e_{\mathrm {ABE,k} }$.\\
+For the high-dimensional estimator, the authors give the estimator is:
+\begin{equation}
+    \hat{I}_{HD}(M) = \frac{1}{2}(\pi _{k}^{-1}(\hat{e}_{gen,\alpha }  )  )^{2}  
+\end{equation}
+
+The method's mutual information discriminant estimator can estimate the mutual information of high-dimensional data without assuming full parameters. The method first requires finding a good classifier. Second, the generalization error must be estimated from the test data. If this method is used, we first need to classify the dataset and then estimate the mutual information efficiently by combining downscaling and nonparametric information estimation. For the methods mentioned in the text, all models are identified as "best case," so there is some error. Therefore, one following needs to improve the estimator.
+\\ \hspace*{\fill} \\
+From Alexander Kraskov, Harald St\"ogbauer, and Peter Grassberger's \emph{Estimating mutual information } \cite{kraskov2004estimating}\\
+In this paper, the authors propose a mutual information estimator based on k-nearest neighbor (knn) entropy estimation, and in this paper, the authors will always use the natural logarithm, which aims to estimate the mutual information I from the set $z_{i} $ with uncertain density $ \mu _{x},\mu _{y} $.
+The authors introduce the estimation of MI from knn statistics, the estimate for MI is then
+\begin{equation}
+I^{(1)}(X,Y) =  \psi(k) - 
+\left \langle \psi (n_{x}+1 ) + \psi (n_{y}+1 ) +\psi (N) \right \rangle   
+\end{equation}
+The second method, the author replace $n_{x}(i)$ and $n_{y}(i)$ by the number of points with $\left \| x_{i} - x_{j}  \right \| \le \varepsilon _{x}(i) /2$ and $\left \| y_{i} - y_{j}  \right \| \le \varepsilon _{y}(i) /2$. The estimate for MI is then
+\begin{equation}
+I^{(2)}  = \psi (k) -1/k -
+\left \langle \psi (n_{x} ) + \psi (n_{y} ) \right \rangle + \psi (N)
+\end{equation}
+Where $\psi$ in formulas (4.8) and (4.9) is the digamma function, digamma function is the logarithmic derivative of the gamma function.\\
+The paper proposes a mutual entropy estimator and yields that a small k reduces the systematic error in terms of statistical and systematic errors, while a large k leads to a minor statistical error. Thus, the choice of a particular estimator depends on the size of the data sample and whether the bias or variance is minimized. This method can minimize the mutual information value to some extent. Still, it cannot estimate the actual value, and the estimator will be more useful in other areas of time series and pattern analysis.
+\\ \hspace*{\fill} \\
+
+
+
+
+
+
+\\ \hspace*{\fill} \\
+From Weihao Gao, Sreeram Kannan, Sewoong Oh, Pramod Viswanath's \emph{Estimating Mutual Information for Discrete-Continuous Mixtures} \cite{gao2018estimating}\\
+Continuous variables are divided into continuous and discrete variables. When the variables of $X$ and $Y$ do not overlap, the current mutual information $I(X; Y)$ estimator calculates the mutual information according to the 3H principle, i.e., the entropy values of $X, Y$ and the pair $(X, Y)$ are calculated separately before calculating the mutual information. However, calculating the separate entropies is not well defined in the existing hybrid space. This work proposes a new estimator to estimate the mutual information of discrete-continuous random variables. This author gives a mixture of random variables. First, one random variable can be discrete and the other continuous. Second, a random variable with a single scalar can be a mixture of discrete and continuous variables. One of the ideas given by this exciting author is that $X$ and $Y$ can be high-dimensional vectors, and each component can be a discrete, continuous or mixed variable. This author develops new estimators by looking at other estimators under mixed variables.
+\\ \hspace*{\fill} \\
+This author also tested the KSG estimators, namely our estimators (4.4) and (4.5) presented above. This paper proposes estimators for general probability distributions inspired by the KSG estimator. First, the authors give new expressions for mutual information by reviewing the mutual information:
+\begin{equation}
+I(X;Y) \equiv   \int_{\mathcal{X}\times \mathcal{Y}}^{}\log_{}{\frac{\mathrm{d}P_{XY} }{\mathrm{d}P_{X} P_{Y}}\mathrm{d}P_{XY}  } 
+\end{equation}
+where $\frac{\mathrm{d}P_{XY}}{\mathrm{d}P_{X} P_{Y}}$ is the Radon-Nikodym derivative. \\
+\\ \hspace*{\fill} \\
+We can note that the mutual information MI is the average of the logarithm of the Radon-Nikodym derivative, so the authors calculated the Radon-Nikodym derivative for each sample i and went to the empirical average. And the authors give a new estimator of the mutual information.
+\begin{equation}
+\hat{I} (X;Y) \equiv \frac{1}{n}   {\textstyle \sum_{i=1}^{n} \log_{}{(\frac{\mathrm{d}P_{XY}}{\mathrm{d}P_{X} P_{Y}})}_{(x_{i}, y_{i})}  }     
+\end{equation}
+The basic idea of this estimator is that when X or Y have discrete random variables, we can assert that data point i is one in a discrete component and can use the plug-in estimator for Radon-Nikodym derivatives. When the data points have a joint density, the fixed radius approach proposed by the KSG estimator can estimate the Radon-NIkodym derivative.\\
+\\ \hspace*{\fill} \\
+The mixed random variable mutual information estimator proposed in this paper effectively addresses the mutual information estimation for variable inconsistencies. For our work on quantifying information loss, typically, acceleration data collected by IMU sensors are continuous random variables, yet the severity of Parkinson's patients' disease is discrete random variables. We must consider the joint probability distribution of random and discrete variables if we rely on mutual information theory to calculate mutual information. The estimator proposed in this article dramatically improves our efficiency in mutual computing information. Based on the KNN algorithm, we also need to consider the choice of k parameters in the KNN algorithm. The choice of parameter k affects the value of the mutual information. On the other hand, we need to explore further extending to high-dimensional data. We should consider the accuracy of this estimator for quantitatively significant and high-dimensional data.
+\\ \hspace*{\fill} \\
+
+From Alberto Porta, Vlasta Bari's \emph{K-nearest-neighbor conditional entropy approach for the assessment of the short-term complexity of cardiovascular control} \cite{porta2012k}\\
+
+For the complexity analysis of short-term cardiovascular control, the paper proposes a conditional entropy estimation method that does not require the addition of a modification term and does not deal with the lack of reliability of the conditional distribution. The method utilizes the k-nearest-neighbor method to construct the conditional distribution. The method has the advantage of not introducing prior probability information and controlling the loss of the conditional distribution. First, this author is given a stationary time series $y(i)$ of length L, i.e., $y(i)$ is a sample point in the L-dimensional embedding space and is given an expression for the conditional entropy concerning L. The method is estimated according to two strategies, the first one relying on $y|y_{L}(i-1)$ and the construction of the distribution of $y_{l}$, and the second one based on the direct estimation of the conditional probability of y(i) given $y_{L-1}(i-1) $. The article proposes a k-nearest-neighbor conditional entropy estimate, where the authors define all k nearest neighbors of $y_{L-1}(i-1) $ together with theirs to form the conditional distribution $y|y_{L-1}(i-1)$. Then the authors give an expression for the k-nearest-neighbor conditional entropy based on the Shannon entropy calculation. The conditional entropy (CE) estimator is:
+   
+\begin{equation}
+    KNNCE(L) = \frac{1}{N-L+1}\sum_{i=L}^{N}SE(y|y_{L-1}(i-1))  
+\end{equation}
+,where SE is the Shannon entropy and N is the number of sample points.\\
+This method challenges the problem of estimating conditional entropy. However, this method has a slight peculiarity in requiring many samples. If the number of samples is small, the conditional entropy calculated by this method has a relatively large error. The method quantifies the conditional entropy directly from the data without additional transformation.
